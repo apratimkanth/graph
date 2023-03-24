@@ -1,0 +1,50 @@
+//gfg question
+class Solution {
+  public:
+    bool bfs(int number,vector<int> adj[],vector<bool>&visited)
+    {
+       unordered_map<int,int>parent;
+       queue<int>q;
+       visited[number]=true;
+       parent[number]=-1;
+       q.push(number);
+       
+       while(q.empty()==false)
+       {
+           int f=q.front();
+           q.pop();
+           for(auto i:adj[f])
+           {
+               if(visited[i]==true && parent[f]!=i)
+               {
+                   return true;
+               }
+               else
+               {
+                   if(visited[i]==false)
+                   {
+                       visited[i]=true;
+                       parent[i]=f;
+                       q.push(i);
+                   }
+               }
+           }
+       }
+       
+       return false;
+        
+    }
+    bool isCycle(int V, vector<int> adj[]) {
+        vector<bool>visited(V,false);
+
+        for(int i=0;i<V;i++){
+            if(visited[i]==false)
+                if(bfs(i,adj,visited))   // 0,adj,visited
+                {
+                    // cout<<i<<"->"<<"true"<<" ";
+                    return 1;
+                }
+        }
+        return 0;
+    }
+};
